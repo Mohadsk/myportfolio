@@ -1,92 +1,192 @@
-/* Global Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* --- Global Variables & Resets --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --secondary: #10b981;
-  --dark: #1f2937;
-  --darker: #111827;
-  --light: #f3f4f6;
-  --lighter: #f9fafb;
-  --text: #374151;
-  --text-light: #6b7280;
+  /* Light Mode Colors */
+  --primary-color: #6366f1; /* Indigo-500 */
+  --accent-color: #f97316; /* Orange-500 */
+  --text-primary: #1e293b; /* Slate-800 */
+  --text-secondary: #475569; /* Slate-600 */
+  --bg-color: #f1f5f9; /* Slate-100 */
+  --card-bg: #fff;
+  --border-color: #e2e8f0; /* Slate-200 */
+  --footer-bg: #cbd5e1; /* Slate-300 */
+  
+  /* Dark Mode Colors */
+  --dm-primary: #818cf8; /* Indigo-400 */
+  --dm-accent: #fb923c; /* Orange-400 */
+  --dm-text-primary: #f8fafc; /* Slate-50 */
+  --dm-text-secondary: #94a3b8; /* Slate-400 */
+  --dm-bg: #0f172a; /* Slate-900 */
+  --dm-card-bg: #1e293b; /* Slate-800 */
+  --dm-border: #334155; /* Slate-700 */
+  
+  /* Typography */
+  --font-family-sans: 'Inter', sans-serif;
+  
+  /* Transitions */
+  --transition-speed: 0.4s;
+}
+
+/* Dark mode theme */
+.dark {
+  --primary-color: var(--dm-primary);
+  --accent-color: var(--dm-accent);
+  --text-primary: var(--dm-text-primary);
+  --text-secondary: var(--dm-text-secondary);
+  --bg-color: var(--dm-bg);
+  --card-bg: var(--dm-card-bg);
+  --border-color: var(--dm-border);
+  --footer-bg: var(--dm-card-bg);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--lighter);
-  color: var(--text);
+  font-family: var(--font-family-sans);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
   line-height: 1.6;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
-.app {
-  min-height: 100vh;
+/* Global rule for responsive images */
+img {
+  max-width: 100%;
+  height: auto;
 }
 
+/* --- Utility Classes --- */
+/* Global responsive container for all sections */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* Section Styles */
-section {
-  padding: 80px 0;
+  padding: 0 1.5rem;
 }
 
 .section-title {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 3rem;
 }
 
 .section-title h2 {
-  font-size: 2.5rem;
-  color: var(--darker);
-  margin-bottom: 15px;
+  font-size: clamp(2rem, 5vw, 3rem); /* Fluid font size */
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
 }
 
 .section-title p {
-  color: var(--text-light);
-  max-width: 600px;
-  margin: 0 auto;
+  font-size: clamp(1rem, 2vw, 1.125rem); /* Fluid font size */
+  color: var(--text-secondary);
 }
 
-/* Button Styles */
-.btn {
-  padding: 12px 28px;
-  border-radius: 6px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-  display: inline-block;
-  border: none;
+/* Add a subtle text shadow for elegance */
+.section-title h2, .section-title p {
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+.dark .section-title h2, .dark .section-title p {
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+/* --- Common Component Styles --- */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Animations --- */
+.slide-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slide-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-down {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.fade-in-down.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Back to Top Button --- */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all var(--transition-speed) ease;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-.btn-primary:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
+.back-to-top:hover {
+  background: #4f46e5;
+  transform: translateY(-5px);
 }
 
-.btn-outline {
-  border: 2px solid var(--primary);
-  color: var(--primary);
-  background: transparent;
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-.btn-outline:hover {
-  background-color: var(--primary);
-  color: white;
-  transform: translateY(-2px);
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+.dark ::-webkit-scrollbar-track {
+  background: var(--dm-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--dm-border);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
 }
